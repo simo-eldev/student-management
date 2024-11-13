@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
-import Auth from "./components/auth/Auth";
+import Authentif from "./components/auth/auth";
 import Home from "./components/home/home";
 import NoPage from "./components/nopage/nopage";
 import PrivateRoutes from "./utilities/PrivateRoutes";
@@ -17,8 +17,8 @@ root.render(
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
         </Route>
-        <Route path="/" element={<Auth />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/" element={<Authentif />} />
+        <Route path="/auth" element={<Authentif />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </AuthProvider>
