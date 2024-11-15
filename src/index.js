@@ -10,15 +10,17 @@ import PrivateRoutes from "./utilities/PrivateRoutes";
 import { AuthProvider } from "./utilities/UseAuth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const logIn = window.localStorage.getItem("isLogedIn")
 root.render(
+  
   <BrowserRouter>
     <AuthProvider>
       <Routes>
         <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={ <Home /> } />
         </Route>
-        <Route path="/" element={<Authentif />} />
-        <Route path="/auth" element={<Authentif />} />
+        <Route path="/" element={logIn ? <Home /> :  <Authentif />} />
+        <Route path="/auth" element={logIn ? <Home /> :  <Authentif />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </AuthProvider>

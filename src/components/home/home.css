@@ -25,3 +25,28 @@
     -webkit-backdrop-filter: blur(10px); /* For Safari */
 }
 
+
+.loginBut1 {
+    display: grid;
+    height: 5em;
+    width: 14em;
+    margin: 51px;
+    margin-top: -500px;
+    
+  
+    border-radius: 15px solid;
+    background:linear-gradient(45deg, #00d0ff 0%, #ae00ff 100%);
+    border: 3px solid;
+    border-radius: 12px;
+    transition: all .2s ease-in-out;
+  }
+  .loginBut1:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgb(199, 199, 199);
+  }
+  .loginBut1 p{
+    color:white;
+    font-size: 20px;
+    margin-top: 13px;
+  }
+

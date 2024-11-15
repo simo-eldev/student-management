@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { UseAuth } from "../../utilities/UseAuth";
 import axios from "axios";
 
+
 function Auth() {
   const { login } = UseAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  console.log(login);
+  
   const navigate = useNavigate();
+ 
 
   const validateEmail = () => {
     if (!email) {
@@ -55,16 +57,19 @@ function Auth() {
       });
   }, []);
 
-  console.log(posts.password)
+ 
 
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateEmail() && validatePassword() && posts.email === email && posts.password === password ) {
+
+      window.localStorage.setItem("isLogedIn",true)
       console.log("Login successful");
       login("dummyToken");
       navigate("/home");
+    
     }
   };
 
@@ -77,7 +82,7 @@ function Auth() {
           <label>Username </label>
           <input
             type="email"
-            placeholder="john.doe@example.com"
+            placeholder="mohamed.el@mouslih.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={validateEmail}
