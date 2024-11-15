@@ -1,7 +1,8 @@
 import "./auth.css";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { UseAuth } from "../../utilities/UseAuth";
+import axios from "axios";
 
 function Auth() {
   const { login } = UseAuth();
@@ -34,9 +35,33 @@ function Auth() {
     }
   };
 
+
+  
+
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Fetch data from JSON Server
+    axios.get('http://localhost:8000/0')
+      .then(response => {
+        setPosts(response.data);  // Store the response data in the state
+        setLoading(false);        // Set loading to false once data is received
+      })
+      .catch(err => {
+        setError(err.message);    // Handle errors
+        setLoading(false);
+      });
+  }, []);
+
+  console.log(posts.password)
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateEmail() && validatePassword()) {
+    if (validateEmail() && validatePassword() && posts.email === email && posts.password === password ) {
       console.log("Login successful");
       login("dummyToken");
       navigate("/home");
