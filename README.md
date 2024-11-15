@@ -1,3 +1,3 @@
-npm install 
-npm start 
-json-server --watch db.json --port 8000 
+npm install ,
+npm start ,
+json-server --watch db.json --port 8000 ,
