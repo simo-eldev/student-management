@@ -1,26 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authentif from "./components/auth/auth";
 import Home from "./components/home/home";
 import NoPage from "./components/nopage/nopage";
+import "./index.css";
 import PrivateRoutes from "./utilities/PrivateRoutes";
 import { AuthProvider } from "./utilities/UseAuth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const logIn = window.localStorage.getItem("isLogedIn")
 root.render(
-  
   <BrowserRouter>
     <AuthProvider>
       <Routes>
-        <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={ <Home /> } />
+        <Route path="/" element={<PrivateRoutes />}>
+          <Route path="/home" element={<Home />} />
         </Route>
-        <Route path="/" element={logIn ? <Home /> :  <Authentif />} />
-        <Route path="/auth" element={logIn ? <Home /> :  <Authentif />} />
+        <Route path="/auth" element={<Authentif />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </AuthProvider>
