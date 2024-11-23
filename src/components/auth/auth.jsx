@@ -1,19 +1,18 @@
 import "./auth.css";
 import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import { UseAuth } from "../../utilities/UseAuth";
+
 import axios from "axios";
 
 
 function Auth() {
-  const { login } = UseAuth();
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   
   const navigate = useNavigate();
- 
 
   const validateEmail = () => {
     if (!email) {
@@ -44,34 +43,47 @@ function Auth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Fetch data from JSON Server
-    axios.get('http://localhost:8000/0')
-      .then(response => {
-        setPosts(response.data);  // Store the response data in the state
-        setLoading(false);        // Set loading to false once data is received
-      })
-      .catch(err => {
-        setError(err.message);    // Handle errors
-        setLoading(false);
-      });
-  }, []);
-
- 
+  
+  const [Message, setMessage] = useState()
 
 
 
-  const handleSubmit = (e) => {
+
+    const handleLogin = async (e) => {
     e.preventDefault();
-    if (validateEmail() && validatePassword() && posts.email === email && posts.password === password ) {
 
-      window.localStorage.setItem("isLogedIn",true)
-      console.log("Login successful");
-      login("dummyToken");
-      navigate("/home");
-    
+    try {
+
+      console.log(email , password)
+      // Send POST request to the backend
+      const response = await axios.post("http://localhost:3000/login", {
+        email,
+        password,
+      });
+
+      // Handle successful response
+      if (response.data.token) {
+        setMessage("Login successful!");
+        console.log(Message)
+        // Save the token in local storage
+        localStorage.setItem("token", response.data.token)
+        navigate("/home")
+        ;
+      }
+    } catch (error) {
+      // Handle errors
+      if (error.response) {
+        setMessage(error.response.data.error);
+      } else {
+        setMessage("An error occurred. Please try again.");
+      }
     }
-  };
+
+  }
+
+
+
+  
 
   return (
     <div className="App">
@@ -100,7 +112,7 @@ function Auth() {
           />
           {/* {renderErrorMessage("pass")} */}
         </div>
-        <button className="loginBut" onClick={handleSubmit}>
+        <button className="loginBut" onClick={handleLogin}>
           <p>Login</p>
         </button>
       </div>

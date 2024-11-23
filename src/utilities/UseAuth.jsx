@@ -1,30 +1,42 @@
-import React, { createContext, useContext, useState } from "react";
+import { useEffect, useState } from "react";
+import {jwtDecode} from "jwt-decode";
 
-const AuthContext = createContext();
+const useAuth = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+const handleauth = () => {
+    const token = localStorage.getItem("token");
 
-  const login = (userToken) => {
-    setToken(userToken);
-  };
-  const logout = () => {
-    setToken(null);
-  };
-  const isAuthenticated = !!localStorage.getItem("isLogedIn");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        
+        // Check if the token is expired
+        if (decoded.exp * 1000 > Date.now()) {
+          setIsAuthenticated(true);
 
-
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const UseAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+          console.log('hahowa dkhall')
+          
+          setUser(decoded); // Store decoded token data like email
+        } else {
+          // Token is expired
+          localStorage.removeItem("token");
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+       
+        console.error("Invalid token", err);
+        setIsAuthenticated(false);
+      }
+    }
   }
-  return context;
+console.log('still false')
+  console.log(isAuthenticated)
+
+  return {
+   
+    isAuthenticated, user };
 };
+
+export default useAuth;

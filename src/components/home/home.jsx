@@ -6,7 +6,7 @@ function Home() {
   const navigate = useNavigate()
 
   const handlelogout = () => {
-    window.localStorage.removeItem("isLogedIn")
+    window.localStorage.removeItem("token")
     navigate("/auth")
 
   }
