@@ -7,10 +7,15 @@ import NoPage from "./components/nopage/nopage";
 import "./index.css";
 import PrivateRoutes from "./utilities/PrivateRoutes";
 //import { AuthProvider } from "./utilities/UseAuth";
+import { AuthProvider } from "./components/auth/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
+  <AuthProvider>
+
+
+ 
     <Routes>
     <Route path="/auth" element={<Authentif />} />
     <Route path = "/" element = {<Authentif />}  />
@@ -23,9 +28,11 @@ root.render(
         }
       />
 
+
       
       <Route path="*" element={<NoPage />} />
     </Routes>
+    </AuthProvider>
   </BrowserRouter>
 );
 
